@@ -1,0 +1,1 @@
+/home/obito1903/Documents/arch-bspwm-dotfile/.p10k.zsh
