@@ -21,6 +21,8 @@ local hotkeys_popup = require("awful.hotkeys_popup")
 -- when client with a matching name is opened:
 require("awful.hotkeys_popup.keys")
 
+awful.spawn("nm-applet")
+
 -- {{{ Error handling
 -- Check if awesome encountered an error during startup and fell back to
 -- another config (This code will only ever execute for the fallback config)
@@ -53,39 +55,10 @@ modkey = "Mod4"
 
 -- }}}
 
--- {{{ Menu
--- Create a launcher widget and a main menu
-
--- Folder with awsome help and utils
-MenuFolderAwesome = {
-    { "hotkeys", function() hotkeys_popup.show_help(nil, awful.screen.focused()) end },
-    { "manual", terminal .. " -e man awesome" },
-    { "edit config", editor_cmd .. " " .. awesome.conffile },
-    { "restart", awesome.restart },
-    { "quit", function() awesome.quit() end }
-}
-
--- MenuFolderEditor = {
---     {"VS Code", "code"},
--- }
-
--- List of object in the launcher
-MenuAppLauncher = awful.menu({
-    item = {
-        {"awesome", MenuFolderAwesome, beautiful.awesome_icon},
-        {"Open terminal", terminal}
-    }
-})
-
--- Launcher icon
-AppLauncher = awful.widget.launcher({
-    image = beautiful.awesome_icon,
-    menu = MenuAppLauncher
-})
+AppLauncher = require("widgets.launcher")
 
 -- Menubar configuration
 menubar.utils.terminal = terminal -- Set the terminal for applications that require it
--- }}}
 
 -- {{{ Tag
 
@@ -104,6 +77,10 @@ tag.connect_signal("request::default_layouts", function()
     })
 end)
 -- }}}
+
+--{{{ Dashboard
+--AppLauncher = require("widgets.launcher")
+--}}}
 
 -- {{{ Wibar
 
@@ -187,10 +164,10 @@ screen.connect_signal("request::desktop_decoration", function(s)
         }
     }
 
-    -- Create the wibox (top bar)
+    ---- Create the wibox (top bar)
     s.topWibox = awful.wibar({ position = "top", screen = s })
-
-    -- Add widgets to the wibox
+--
+    ---- Add widgets to the wibox
     s.topWibox.widget = {
         layout = wibox.layout.align.horizontal,
         { -- Left widgets
@@ -208,6 +185,52 @@ screen.connect_signal("request::desktop_decoration", function(s)
             s.layoutIndicator,
         },
     }
+
+    -- Dashboard {{{
+    	-- Shape for wiboxes
+	local topbarBoxshape = function(cr, width, height)
+		gears.shape.rounded_rect(cr, width, height,4)
+	end
+
+	local maketopbarBox = function(xval, yval, wval, hval)
+		local box = wibox({
+			--widget =
+			x = xval,
+			y = yval,
+			width = wval,
+			screen = s,
+			height = hval,
+			align = "center",
+			valign = "center",
+			visible = true,
+			shape = topbarBoxshape,
+			bg = beautiful.bg_normal})
+		box.type = "dock"
+		return box
+
+	end
+	
+	-- Draws all the boxes needed for the dashboard
+	--			(Xpos, Ypos, Width, Height)
+    --AppLauncherWid = maketopbarBox(5, 5,20,20)
+    --TagListWid = maketopbarBox(30, 5,126,20)
+    --TaskListWid = maketopbarBox(660, 5,600,20)
+    --layoutIndicatorWid = maketopbarBox(1895, 5,20,20)
+    --clockWid = maketopbarBox(1790, 5,100,20)
+    --systrayWid = maketopbarBox(1745, 5,40,20)
+	--dashboardVisible = true
+
+	--{{{ Filling wiboxes with widgets
+    --AppLauncherWid.widget = AppLauncher
+    --TagListWid.widget = s.tagList
+    --TaskListWid.widget = s.taskList
+    --layoutIndicatorWid.widget = s.layoutIndicator
+    --clockWid.widget = TextClock
+    --systrayWid.widget = wibox.widget.systray()
+	--}}}
+
+    -- }}}
+
 end)
 -- }}}
 
@@ -225,7 +248,7 @@ awful.mouse.append_global_mousebindings({
 awful.keyboard.append_global_keybindings({
     awful.key({ modkey,           }, "s",      hotkeys_popup.show_help,
               {description="show help", group="awesome"}),
-    awful.key({ modkey,           }, "w", function () launchermenu:show() end,
+    awful.key({ modkey,           }, "w", function () MenuAppLauncher:show() end,
               {description = "show main menu", group = "awesome"}),
     awful.key({ modkey, "Control" }, "r", awesome.restart,
               {description = "reload awesome", group = "awesome"}),
@@ -328,9 +351,9 @@ awful.keyboard.append_global_keybindings({
     awful.key({ }, "XF86MonBrightnessUp", function ()
         awful.util.spawn("sudo light -A 10") end),
     awful.key({ }, "XF86AudioRaiseVolume", function ()
-        awful.spawn.with_shell("~/.config/awesome/volumectl.sh +") end),
+        awful.spawn.with_shell("~/.config/awesome/scripts/volumectl.sh +") end),
     awful.key({ }, "XF86AudioLowerVolume", function ()
-        awful.spawn.with_shell("~/.config/awesome/volumectl.sh -") end),
+        awful.spawn.with_shell("~/.config/awesome/scripts/volumectl.sh -") end),
     awful.key({ }, "XF86AudioMute", function ()
         awful.util.spawn("pactl set-sink-mute 0 toggle") end),
 })
