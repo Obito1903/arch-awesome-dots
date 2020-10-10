@@ -21,6 +21,8 @@ local hotkeys_popup = require("awful.hotkeys_popup")
 -- when client with a matching name is opened:
 require("awful.hotkeys_popup.keys")
 
+local volume_control = require("volume-control")
+
 -- {{{ Error handling
 -- Check if awesome encountered an error during startup and fell back to
 -- another config (This code will only ever execute for the fallback config)
@@ -35,8 +37,8 @@ end)
 
 -- {{{ Variable definitions
 -- Themes define colours, icons, font and wallpapers
-beautiful.init("/home/obito1903/.config/awesome/themes/obito/theme.lua")
-
+beautiful.init("/home/obito1903/.config/awesome/themes/nerv/theme.lua")
+beautiful.notification_border_width	= 0
 -- Default terminal
 terminal = "termite"
 -- Default editor
@@ -53,6 +55,9 @@ modkey = "Mod4"
 
 -- }}}
 
+-- define your volume control, using default settings:
+volumecfg = volume_control({})
+
 AppLauncher = require("widgets.launcher")
 
 -- Menubar configuration
@@ -65,13 +70,6 @@ tag.connect_signal("request::default_layouts", function()
     awful.layout.append_default_layouts({
         awful.layout.suit.tile,
         awful.layout.suit.floating,
-        awful.layout.suit.tile.bottom,
-        awful.layout.suit.fair,
-        awful.layout.suit.fair.horizontal,
-        awful.layout.suit.spiral.dwindle,
-        awful.layout.suit.max,
-        awful.layout.suit.max.fullscreen,
-        awful.layout.suit.corner.nw
     })
 end)
 -- }}}
@@ -96,7 +94,7 @@ screen.connect_signal("request::wallpaper", function(s)
         if type(wallpaper) == "function" then
             wallpaper = wallpaper(s)
         end
-        gears.wallpaper.maximized(wallpaper, s, true)
+        gears.wallpaper.fit(wallpaper, s)
     end
 end)
 
@@ -170,16 +168,17 @@ screen.connect_signal("request::desktop_decoration", function(s)
         layout = wibox.layout.align.horizontal,
         { -- Left widgets
             layout = wibox.layout.fixed.horizontal,
-            AppLauncher,
+            --AppLauncher,
             s.tagList,
             s.promptBox,
         },
         s.taskList, -- Middle widget
         { -- Right widgets
             layout = wibox.layout.fixed.horizontal,
+            volumecfg.widget,
             KeyboardLayoutIndicator,
-            wibox.widget.systray(),
             TextClock,
+            wibox.widget.systray(),
             s.layoutIndicator,
         },
     }
@@ -327,12 +326,11 @@ awful.keyboard.append_global_keybindings({
         awful.util.spawn("sudo light -U 10") end),
     awful.key({ }, "XF86MonBrightnessUp", function ()
         awful.util.spawn("sudo light -A 10") end),
-    awful.key({ }, "XF86AudioRaiseVolume", function ()
-        awful.spawn.with_shell("~/.config/awesome/scripts/volumectl.sh +") end),
-    awful.key({ }, "XF86AudioLowerVolume", function ()
-        awful.spawn.with_shell("~/.config/awesome/scripts/volumectl.sh -") end),
-    awful.key({ }, "XF86AudioMute", function ()
-        awful.util.spawn("pactl set-sink-mute 0 toggle") end),
+    awful.key({}, "XF86AudioRaiseVolume", function() volumecfg:up() end),
+    awful.key({}, "XF86AudioLowerVolume", function() volumecfg:down() end),
+    awful.key({}, "XF86AudioMute",        function() volumecfg:toggle() end),
+    awful.key({ }, "Print", function() awful.util.spawn_with_shell("maim ~/Images/$(date +%s).png") end,
+    {description = "Take a screenshot of entire screen", group = "screenshot"})
 })
 
 awful.keyboard.append_global_keybindings({
@@ -581,12 +579,6 @@ end)
 -- Enable sloppy focus, so that focus follows mouse.
 client.connect_signal("mouse::enter", function(c)
     c:activate { context = "mouse_enter", raise = false }
-end)
-
-client.connect_signal("manage", function (c)
-    c.shape = function(cr,w,h)
-        gears.shape.rounded_rect(cr,w,h,5)
-    end
 end)
 
 awful.spawn("nm-applet")

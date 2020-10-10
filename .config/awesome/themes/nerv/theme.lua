@@ -1,6 +1,6 @@
 -------------------------------
---  "obito" awesome theme  --
---    By Adrian C. (anrxc)   --
+--  "obito" awesome theme    --
+--    By Obito1903           --
 -------------------------------
 
 local themes_path = "/home/obito1903/.config/awesome/themes/"
@@ -9,64 +9,31 @@ local dpi = require("beautiful.xresources").apply_dpi
 
 -- {{{ Main
 local theme = {}
-theme.wallpaper = themes_path .. "obito/bg3.png"
+theme.wallpaper = themes_path .. "nerv/nerv.jpg"
 -- }}}
 
 -- {{{ Styles
 theme.font      = "UbuntuMono Nerd Font"
 
+
 -- {{{ Colors
 theme.fg_normal  = "#cccccc"
 theme.fg_focus   = "#ffffff"
 theme.fg_urgent  = "#fe4450"
-theme.bg_normal  = "#262335"
-theme.bg_focus   = "#1d1d21"
-theme.bg_urgent  = "#171520"
+theme.bg_normal  = "#000000"
+theme.bg_focus   = "#101010"
+theme.bg_urgent  = "#F4022C"
 theme.bg_systray = theme.bg_normal
 -- }}}
 
 -- {{{ Borders
-theme.useless_gap   = dpi(3)
+theme.useless_gap   = dpi(2)
 theme.border_width  = 0
 -- }}}
 
 -- {{{ Titlebars
-theme.titlebar_bg_focus  = "#171520"
-theme.titlebar_bg_normal = "#171520"
--- }}}
-
--- There are other variable sets
--- overriding the default one when
--- defined, the sets are:
--- [taglist|tasklist]_[bg|fg]_[focus|urgent|occupied|empty|volatile]
--- titlebar_[normal|focus]
--- tooltip_[font|opacity|fg_color|bg_color|border_width|border_color]
--- Example:
---theme.taglist_bg_focus = "#CC9393"
--- }}}
-
--- {{{ Widgets
--- You can add as many variables as
--- you wish and access them by using
--- beautiful.variable in your rc.lua
---theme.fg_widget        = "#AECF96"
---theme.fg_center_widget = "#88A175"
---theme.fg_end_widget    = "#FF5656"
---theme.bg_widget        = "#494B4F"
---theme.border_widget    = "#3F3F3F"
--- }}}
-
--- {{{ Mouse finder
-theme.mouse_finder_color = "#fe4450"
--- mouse_finder_[timeout|animate_timeout|radius|factor]
--- }}}
-
--- {{{ Menu
--- Variables set for theming the menu:
--- menu_[bg|fg]_[normal|focus]
--- menu_[border_color|border_width]
-theme.menu_height = dpi(15)
-theme.menu_width  = dpi(100)
+theme.titlebar_bg_focus  = theme.bg_normal
+theme.titlebar_bg_normal = theme.bg_normal
 -- }}}
 
 -- {{{ Icons
@@ -137,6 +104,8 @@ rnotification.connect_signal('request::rules', function()
     }
 end)
 
-return theme
+theme.notification_bg = '#151515'
+theme.notification_border_width	= 0
+-- theme.notification_border_color = '#151515'
 
--- vim: filetype=lua:expandtab:shiftwidth=4:tabstop=8:softtabstop=4:textwidth=80
+return theme
