@@ -22,6 +22,7 @@ local hotkeys_popup = require("awful.hotkeys_popup")
 require("awful.hotkeys_popup.keys")
 
 awful.spawn("nm-applet")
+awful.spawn("picom")
 
 -- {{{ Error handling
 -- Check if awesome encountered an error during startup and fell back to
@@ -104,7 +105,7 @@ end)
 
 screen.connect_signal("request::desktop_decoration", function(s)
     -- Each screen has its own tag table.
-    awful.tag({ "1", "2", "3", "4", "5", "6", "7", "8", "9" }, s, awful.layout.layouts[1])
+    awful.tag({"WEB", "CODE", "TERM", "TOOL", "RS", "MISC" }, s, awful.layout.layouts[1])
 
     -- Create a promptbox for each screen to run command from   menu bar
     s.promptBox = awful.widget.prompt()
@@ -187,29 +188,6 @@ screen.connect_signal("request::desktop_decoration", function(s)
     }
 
     -- Dashboard {{{
-    	-- Shape for wiboxes
-	local topbarBoxshape = function(cr, width, height)
-		gears.shape.rounded_rect(cr, width, height,4)
-	end
-
-	local maketopbarBox = function(xval, yval, wval, hval)
-		local box = wibox({
-			--widget =
-			x = xval,
-			y = yval,
-			width = wval,
-			screen = s,
-			height = hval,
-			align = "center",
-			valign = "center",
-			visible = true,
-			shape = topbarBoxshape,
-			bg = beautiful.bg_normal})
-		box.type = "dock"
-		return box
-
-	end
-	
 	-- Draws all the boxes needed for the dashboard
 	--			(Xpos, Ypos, Width, Height)
     --AppLauncherWid = maketopbarBox(5, 5,20,20)

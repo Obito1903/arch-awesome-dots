@@ -13,7 +13,7 @@ theme.wallpaper = themes_path .. "zenburn/bg3.png"
 -- }}}
 
 -- {{{ Styles
-theme.font      = "sans 8"
+theme.font      = "UbuntuMono Nerd Font"
 
 -- {{{ Colors
 theme.fg_normal  = "#DCDCCC"

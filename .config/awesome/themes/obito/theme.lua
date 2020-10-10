@@ -13,29 +13,29 @@ theme.wallpaper = themes_path .. "obito/bg3.png"
 -- }}}
 
 -- {{{ Styles
-theme.font      = "sans 8"
+theme.font      = "UbuntuMono Nerd Font"
 
 -- {{{ Colors
-theme.fg_normal  = "#DCDCCC"
-theme.fg_focus   = "#F0DFAF"
-theme.fg_urgent  = "#CC9393"
-theme.bg_normal  = "#3F3F3F"
-theme.bg_focus   = "#1E2320"
-theme.bg_urgent  = "#3F3F3F"
+theme.fg_normal  = "#cccccc"
+theme.fg_focus   = "#ffffff"
+theme.fg_urgent  = "#fe4450"
+theme.bg_normal  = "#262335"
+theme.bg_focus   = "#1d1d21"
+theme.bg_urgent  = "#171520"
 theme.bg_systray = theme.bg_normal
 -- }}}
 
 -- {{{ Borders
 theme.useless_gap   = dpi(3)
 theme.border_width  = dpi(2)
-theme.border_color_normal = "#3F3F3F"
+theme.border_color_normal = "#171520"
 theme.border_color_active = "#6F6F6F"
-theme.border_color_marked = "#CC9393"
+theme.border_color_marked = "#fe4450"
 -- }}}
 
 -- {{{ Titlebars
-theme.titlebar_bg_focus  = "#3F3F3F"
-theme.titlebar_bg_normal = "#3F3F3F"
+theme.titlebar_bg_focus  = "#171520"
+theme.titlebar_bg_normal = "#171520"
 -- }}}
 
 -- There are other variable sets
@@ -60,7 +60,7 @@ theme.titlebar_bg_normal = "#3F3F3F"
 -- }}}
 
 -- {{{ Mouse finder
-theme.mouse_finder_color = "#CC9393"
+theme.mouse_finder_color = "#fe4450"
 -- mouse_finder_[timeout|animate_timeout|radius|factor]
 -- }}}
 
