@@ -583,5 +583,5 @@ end)
 
 awful.spawn("nm-applet")
 awful.spawn("picom")
--- awful.util.spawn_with_shell("~/.config/awesome/locker.sh")
--- awful.util.spawn_with_shell("~/.lock.sh")
+awful.util.spawn_with_shell("~/.config/awesome/locker.sh")
+-- awful.util.spawn_with_shell("~/.i3lock.sh")

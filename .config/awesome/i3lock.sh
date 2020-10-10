@@ -4,28 +4,26 @@ B='#00000000'  # blank
 C='#ffffff22'  # clear ish
 D='#262335cc'  # default
 T='#ffffffee'  # text
-W='#171520bb'  # wrong
-V='#1d1d21bb'  # verifying
 
 i3lock \
---insidevercolor=$C   \
---ringvercolor=$V     \
+--insidevercolor=$B   \
+--ringvercolor='#8BD450ff'     \
 \
---insidewrongcolor=$C \
---ringwrongcolor=$W   \
+--insidewrongcolor=$B \
+--ringwrongcolor='#F2002Aff'   \
 \
 --insidecolor=$B      \
---ringcolor=$D        \
---linecolor=$B        \
---separatorcolor=$D   \
+--ringcolor='#1D1A2F77'        \
+--linecolor='#1D1A2F00'        \
+--separatorcolor='#1D1A2Fff'   \
 \
 --verifcolor=$T        \
 --wrongcolor=$T        \
 --timecolor=$T        \
 --datecolor=$T        \
 --layoutcolor=$T      \
---keyhlcolor=$W       \
---bshlcolor=$W        \
+--keyhlcolor='#3F6D4Eff'       \
+--bshlcolor='#e6770bff'        \
 \
 --screen 1            \
 --blur 8              \
