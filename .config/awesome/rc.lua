@@ -21,9 +21,6 @@ local hotkeys_popup = require("awful.hotkeys_popup")
 -- when client with a matching name is opened:
 require("awful.hotkeys_popup.keys")
 
-awful.spawn("nm-applet")
-awful.spawn("picom")
-
 -- {{{ Error handling
 -- Check if awesome encountered an error during startup and fell back to
 -- another config (This code will only ever execute for the fallback config)
@@ -246,8 +243,10 @@ awful.keyboard.append_global_keybindings({
               {description = "open a terminal", group = "launcher"}),
     awful.key({ modkey },            "r",     function () awful.screen.focused().promptBox:run() end,
               {description = "run prompt", group = "launcher"}),
-    awful.key({ modkey }, "p", function() menubar.show() end,
-              {description = "show the menubar", group = "launcher"}),
+    --awful.key({ modkey }, "p", function() menubar.show() end,
+    --          {description = "show the menubar", group = "launcher"}),
+    awful.key({ modkey }, "p", function () awful.spawn("rofi -combi-modi window,drun,ssh -icon-theme 'Flat-Remix-Blue-Dark' -show-icons -show combi") end,
+              {description = "rofi", group = "launcher"}),
 })
 
 -- Tags related keybindings
@@ -589,3 +588,8 @@ client.connect_signal("manage", function (c)
         gears.shape.rounded_rect(cr,w,h,5)
     end
 end)
+
+awful.spawn("nm-applet")
+awful.spawn("picom")
+-- awful.util.spawn_with_shell("~/.config/awesome/locker.sh")
+-- awful.util.spawn_with_shell("~/.lock.sh")
